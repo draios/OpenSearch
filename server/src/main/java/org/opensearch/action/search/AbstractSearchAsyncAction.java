@@ -460,10 +460,7 @@ abstract class AbstractSearchAsyncAction<Result extends SearchPhaseResult> exten
                 onPhaseFailure(this, "The phase has failed", ex);
             }
         } else if (totalOps > expectedTotalOps) {
-            throw new AssertionError(
-                "unexpected higher total ops [" + totalOps + "] compared to expected [" + expectedTotalOps + "]",
-                new SearchPhaseExecutionException(getName(), "Shard failures", null, buildShardFailures())
-            );
+            onPhaseFailure(this, "The phase has failed: unexpected higher total ops [" + totalOps + "] compared to expected [" + expectedTotalOps + "]", null);
         } else {
             if (lastShard == false) {
                 performPhaseOnShard(shardIndex, shardIt, nextShard);
